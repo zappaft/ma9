@@ -1,0 +1,64 @@
+<div class="component-wrapper">
+  <div class="content-wrapper">
+    <div>
+      <div class="button-container">
+        <button mat-mini-fab color="primary" (click)="clientDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" />
+      </mat-form-field>
+    </div>
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+          <td mat-cell *matCellDef="let client">{{ client.nome | rowlabel: 30 }}</td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let client">{{ client.email | rowlabel: 30 }}</td>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let client" [attr.colspan]="displayedColumns.length">
+            <div
+              class="client-detail"
+              [@detailExpand]="client == expandedClient ? 'expanded' : 'collapsed'"
+              [class.expanded-row]="expandedClient === client"
+            >
+              <div class="expanded-detail">
+                <div>
+                  <span>ID: {{ client.id }}</span>
+                  <span>Nome: {{ client.nome }}</span>
+                  <span>CPF: {{ client.cpf | cpf }}</span>
+                  <span>Sexo: {{ client.sexo | sexlabel }}</span>
+                </div>
+                <div>
+                  <span>Email: {{ client.email }}</span>
+                  <span>Telefone: {{ client.phone | phone }}</span>
+                  <span>Nascimento: {{ client.dat_nasc | date: "dd/MM/yyyy" }}</span>
+                </div>
+              </div>
+              <div class="action-button-container">
+                <button mat-flat-button color="accent" (click)="clientDialog(client)">Editar</button>
+                <button mat-flat-button color="warn" (click)="buttonTest()">Deletar</button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let client; columns: displayedColumns"
+          class="client-row"
+          [class.expanded-row]="expandedClient === client"
+          (click)="expandedClient = expandedClient === client ? null : client"
+        ></tr>
+        <tr mat-row *matRowDef="let client; columns: ['expandedDetail']" class="detail-row"></tr>
+      </table>
+    </div>
+    <mat-paginator [pageSize]="25" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
