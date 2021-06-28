@@ -3,8 +3,9 @@
   <form [formGroup]="clientForm" class="client-form">
     <mat-form-field>
       <mat-label>Nome</mat-label>
-      <input matInput type="text" formControlName="nome" />
+      <input matInput type="text" formControlName="nome" minlength="4" />
       <button
+        tabindex="-1"
         *ngIf="clientForm.controls.nome.value"
         matSuffix
         mat-icon-button
@@ -17,8 +18,9 @@
 
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input matInput type="text" formControlName="email" />
+      <input matInput type="email" formControlName="email" mask="" />
       <button
+        tabindex="-1"
         *ngIf="clientForm.controls.email.value"
         matSuffix
         mat-icon-button
@@ -31,8 +33,9 @@
 
     <mat-form-field>
       <mat-label>CPF</mat-label>
-      <input matInput type="text" formControlName="cpf" />
+      <input matInput type="text" formControlName="cpf" mask="000.000.000-00" />
       <button
+        tabindex="-1"
         *ngIf="clientForm.controls.cpf.value"
         matSuffix
         mat-icon-button
@@ -45,8 +48,9 @@
 
     <mat-form-field>
       <mat-label>Telefone</mat-label>
-      <input matInput type="text" formControlName="phone" />
+      <input matInput type="text" formControlName="phone" mask="(00) 0 0000-0000" />
       <button
+        tabindex="-1"
         *ngIf="clientForm.controls.phone.value"
         matSuffix
         mat-icon-button
@@ -59,22 +63,17 @@
 
     <mat-form-field>
       <mat-label>Sexo</mat-label>
-      <input matInput type="text" formControlName="sexo" />
-      <button
-        *ngIf="clientForm.controls.sexo.value"
-        matSuffix
-        mat-icon-button
-        aria-label="Clear"
-        (click)="clientForm.controls.sexo.patchValue('')"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
+      <mat-select formControlName="sexo">
+        <mat-option [value]="'F'">Mulher</mat-option>
+        <mat-option [value]="'M'">Homem</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Data de Nascimento</mat-label>
-      <input matInput type="text" formControlName="dat_nasc" />
+      <input matInput type="text" formControlName="dat_nasc" mask="00/00/0000" />
       <button
+        tabindex="-1"
         *ngIf="clientForm.controls.dat_nasc.value"
         matSuffix
         mat-icon-button
