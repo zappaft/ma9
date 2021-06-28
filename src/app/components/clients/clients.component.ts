@@ -62,10 +62,11 @@ export class ClientsComponent implements OnInit {
   }
 
   deleteClient(client: IClient) {
-    this.dataSource.data = this.dataSource.data.filter((_client: IClient) => {
-      return client.id !== _client.id;
+    this.clientsService.deleteClient(client).then((_) => {
+      this.dataSource.data = this.dataSource.data.filter((_client: IClient) => {
+        return client.id !== _client.id;
+      });
     });
-    this.clientsService.deleteClient(client).then(console.log);
   }
 
   async updateClient(client: IClient) {
